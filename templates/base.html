@@ -1,0 +1,67 @@
+{% load staticfiles %}
+
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Django digital marketplace</title>
+
+    <!-- Bootstrap -->
+    <link href="{% static 'css/base.css' %}" rel="stylesheet">
+<style>
+.main-content{
+  width: 800px;
+  margin: 0 auto;
+  clear: both;
+}
+
+.main-nav{
+  width: 800px;
+  margin: 10px auto;
+}
+
+.main-nav li{
+  display: inline;
+}
+
+.pull-right{
+  float: right;
+}
+
+.pull-left{
+  float: left;
+}
+
+.first-nav{
+  padding-left: 0px;
+}
+
+{% block style %}
+{% endblock style %}
+</style>
+
+  </head>
+  <body>
+    <nav class="main-nav">
+      <ul class="pull-left first-nav">
+        <li><a href="{% url 'dashboard' %}">Digital Marketplace</a></li>
+      </ul>
+
+      <ul class="pull-right">
+        <li><a href="{% url 'products:list' %}">products</a></li>
+        <li><a href="{% url 'tags:list' %}">Tags</a></li>
+        <li><a href="#">Library</a></li>
+      </ul>
+    </nav>
+    <div class="main-content">
+    {% block content %}
+    {% endblock content %}
+</div>
+    <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+    <!-- Include all compiled plugins (below), or include individual files as needed -->
+    <script src="js/bootstrap.min.js"></script>
+  </body>
+</html>
