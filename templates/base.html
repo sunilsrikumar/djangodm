@@ -7,7 +7,7 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>Django digital marketplace</title>
-
+    <link rel="stylesheet" href="//code.jquery.com/ui/1.11.4/themes/smoothness/jquery-ui.css">
     <!-- Bootstrap -->
     <link href="{% static 'css/base.css' %}" rel="stylesheet">
 <style>
@@ -51,6 +51,22 @@
   clear: both;
 }
 
+#purchase-btn{
+  color: red;
+}
+
+button.buy-btn {
+	border: 1px solid #DA5B00 !important;
+	background: #DA5B00 !important;
+}
+button.buy-btn .ui-button-text {
+	color: #ffffff;
+}
+.ui-widget-header {
+	border: 1px solid #ffffff !important;
+	background: #ffffff !important;
+}
+
 {% block style %}
 {% endblock style %}
 </style>
@@ -76,5 +92,14 @@
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
     <!-- Include all compiled plugins (below), or include individual files as needed -->
     <script src="js/bootstrap.min.js"></script>
+    <script src="http://code.jquery.com/jquery-1.12.0.min.js"></script>
+    <script src="http://code.jquery.com/ui/1.11.4/jquery-ui.min.js"></script>
+    <script type="text/javascript">
+      $(document).ready(function(){
+        {% block jquery %}
+
+        {% endblock jquery %}
+      })
+    </script>
   </body>
 </html>
