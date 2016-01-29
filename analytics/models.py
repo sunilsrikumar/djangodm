@@ -24,3 +24,5 @@ class TagView(models.Model):
 
 	def __unicode__(self):
 		return str(self.tag.title)
+
+
