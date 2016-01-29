@@ -10,7 +10,12 @@ class CheckoutTestView(View):
     def post(self, request, *args, **kwargs):
         print request.POST.get("testData")
         if request.is_ajax():
-            raise Http404
+            # raise Http404
+            if not request.user.is_authenticated():
+                data = {
+                    "works": False,
+                }
+                return JsonResponse(data, status=401)
             data = {
                 "works": True,
                 "time": datetime.datetime.now(),
