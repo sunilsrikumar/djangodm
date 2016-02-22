@@ -41,6 +41,7 @@ INSTALLED_APPS = (
     # Custom Apps
     'analytics',
     'products',
+    'sellers',
     'tags',
     'dashboard',
 )
