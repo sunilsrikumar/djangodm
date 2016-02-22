@@ -1,7 +1,20 @@
 from django.shortcuts import render
 from django.views.generic import View
 
+from djangodm.mixins import LoginRequiredMixin
+
+from .forms import NewSellerForm
+
 # Create your views here.
-class SellerDashboard(View):
+class SellerDashboard(LoginRequiredMixin, View):
+
+    def post(self, request, *args, **kwargs):
+        form = NewSellerForm(request.POST)
+        if form.is_valid():
+            print "Make the user apply model"
+        return render(request, "sellers/dashboard.html", {"form":form})
+
+
     def get(self, request, *args, **kwargs):
-        return render(request, "sellers/dashboard.html", {})
+        form = NewSellerForm()
+        return render(request, "sellers/dashboard.html", {"form":form})

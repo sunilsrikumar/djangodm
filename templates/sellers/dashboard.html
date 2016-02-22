@@ -3,4 +3,17 @@
 {% block content %}
 <h1>Seller Dashboard</h1>
 
+Rules of the Marketplace
+
+<form method="POST" action=""> {% csrf_token %}
+  <ol>
+<li>Be Kind</li>
+<li>Sell well</li>
+<li>Don't steal</li>
+<li>Be Kind</li>
+  </ol>
+{{ form.as_p }}
+<br/>
+<input type="submit"/>
+</form>
 {% endblock %}
