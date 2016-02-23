@@ -1,19 +1,23 @@
 {% extends "base.html" %}
 
 {% block content %}
-<h1>Seller Dashboard</h1>
+<h1>{{ title }}</h1>
 
-Rules of the Marketplace
+{% if apply_form %}
+<form method='POST' action=''> {% csrf_token %}
+  <h3>Rules of the Marketplace</h3>
 
-<form method="POST" action=""> {% csrf_token %}
   <ol>
 <li>Be Kind</li>
 <li>Sell well</li>
 <li>Don't steal</li>
 <li>Be Kind</li>
   </ol>
-{{ form.as_p }}
+{{ apply_form.as_p }}
 <br/>
 <input type="submit"/>
 </form>
+
+{% endif %}
+
 {% endblock %}
