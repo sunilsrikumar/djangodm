@@ -40,6 +40,7 @@ INSTALLED_APPS = (
 
     # Custom Apps
     'analytics',
+    'billing',
     'products',
     'sellers',
     'tags',

@@ -7,14 +7,16 @@ from django.shortcuts import render
 from products.models import Product, MyProducts
 # Create your views here.
 
+from billing.models import Transaction
+
 class CheckoutAjaxView(View):
     def post(self, request, *args, **kwargs):
         if request.is_ajax():
             # raise Http404
             if not request.user.is_authenticated():
                 return JsonResponse({}, status=401)
-            # credit card required ** 
-            
+            # credit card required **
+
 
 
             user = request.user
@@ -28,6 +30,13 @@ class CheckoutAjaxView(View):
             except:
                 product_obj = Product.objects.filter(id=product_id).first()
 
+            # run Transaction
+            trans_obj = Transaction.objects.create(
+                user = request.user,
+                product = product_obj,
+                price = product_obj.get_price,
+            )
+            
             my_products = MyProducts.objects.get_or_create(user=request.user)[0]
             my_products.products.add(product_obj)
 
