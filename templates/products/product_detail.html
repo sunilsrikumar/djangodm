@@ -6,6 +6,7 @@ $(document).ready(function(){
 {% block jquery %}
 $("#purchase-btn").click(function(event){
 	event.preventDefault()
+	var purchaseBtn = $(this)
 	$("#dialog-confirm").fadeIn("300")
 	$("#dialog-confirm").dialog({
 		resizable: false,
@@ -23,11 +24,16 @@ $("#purchase-btn").click(function(event){
 						url: "{% url 'checkout' %}",
 						data: {
 							product_id: "{{ object.id }}",
-							
+
 						}
 					})
 					request.done(function(data){
-						console.log("working...")
+						console.log(data.download)
+						console.log(data.preview)
+						puchaseBtn.before("<p><a href='" + data.download + "'>Download</p><p><a href='" + data.preview + "'>Preview</p>")
+						puchaseBtn.fadeOut(100)
+
+						// console.log("working...")
 						// if (data.works) {
 						// 	$("#content").html(data.time)
 						// }
@@ -42,7 +48,7 @@ $("#purchase-btn").click(function(event){
 						}
 					})
 					$(this).dialog("close")
-				}, 
+				},
 				class: "buy-btn"
 			},
 			2: {
@@ -50,7 +56,7 @@ $("#purchase-btn").click(function(event){
 				text: "Cancel",
 				click: function(){
 					$(this).dialog("close")
-				}, 
+				},
 				class: "cancel-btn"
 			}
 		}
