@@ -6,47 +6,46 @@ from django.shortcuts import render
 
 from products.models import Product, MyProducts
 # Create your views here.
+from djangodm.mixins import AjaxRequiredMixin
 
 from billing.models import Transaction
 
-class CheckoutAjaxView(View):
+class CheckoutAjaxView(AjaxRequiredMixin, View):
     def post(self, request, *args, **kwargs):
-        if request.is_ajax():
-            # raise Http404
-            if not request.user.is_authenticated():
-                return JsonResponse({}, status=401)
-            # credit card required **
+        # if request.is_ajax():
+        # raise Http404
+        if not request.user.is_authenticated():
+            return JsonResponse({}, status=401)
+        # credit card required **
+
+        user = request.user
+        product_id = request.POST.get("product_id")
+        exists = Product.objects.filter(id=product_id).exists()
+        if not exists:
+            return JsonResponse({}, status=404)
+
+        try:
+            product_obj = Product.object.get(id=product_id)
+        except:
+            product_obj = Product.objects.filter(id=product_id).first()
+
+        # run Transaction
+        trans_obj = Transaction.objects.create(
+            user = request.user,
+            product = product_obj,
+            price = product_obj.get_price,
+        )
+
+        my_products = MyProducts.objects.get_or_create(user=request.user)[0]
+        my_products.products.add(product_obj)
 
 
-
-            user = request.user
-            product_id = request.POST.get("product_id")
-            exists = Product.objects.filter(id=product_id).exists()
-            if not exists:
-                return JsonResponse({}, status=404)
-
-            try:
-                product_obj = Product.object.get(id=product_id)
-            except:
-                product_obj = Product.objects.filter(id=product_id).first()
-
-            # run Transaction
-            trans_obj = Transaction.objects.create(
-                user = request.user,
-                product = product_obj,
-                price = product_obj.get_price,
-            )
-            
-            my_products = MyProducts.objects.get_or_create(user=request.user)[0]
-            my_products.products.add(product_obj)
-
-
-            data = {
-                "works": True,
-                "time": datetime.datetime.now(),
-            }
-            return JsonResponse(data)
-        raise Http404
+        data = {
+            "works": True,
+            "time": datetime.datetime.now(),
+        }
+        return JsonResponse(data)
+        # raise Http404
 
 
 
