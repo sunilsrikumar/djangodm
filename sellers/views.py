@@ -2,7 +2,9 @@ from django.shortcuts import render
 from django.views.generic import View
 from django.views.generic.edit import FormMixin
 
+from billing.models import Transaction
 from djangodm.mixins import LoginRequiredMixin
+from products.models import Product
 
 from .forms import NewSellerForm
 from .models import SellerAccount
@@ -44,6 +46,9 @@ class SellerDashboard(LoginRequiredMixin, FormMixin, View):
             context["title"] = "Accont Pending"
         elif exists and active:
             context["title"] = "Seller Dashboard"
+            products = Product.objects.filter(seller=account)
+            context["products"] = products
+            context["transactions"] = Transaction.objects.filter(product__in=products)
         else:
             pass
 
