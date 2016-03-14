@@ -1,6 +1,7 @@
 from django.shortcuts import render
 from django.views.generic import View
 from django.views.generic.edit import FormMixin
+from django.views.generic.list import ListView
 
 from billing.models import Transaction
 from djangodm.mixins import LoginRequiredMixin
@@ -9,7 +10,18 @@ from products.models import Product
 from .forms import NewSellerForm
 from .models import SellerAccount
 
-# Create your views here.
+class SellerTransactionListView(ListView):
+    model = Transaction
+    template_name = "Sellers/transaction_list_view.html"
+
+    def get_queryset(self):
+        account = SellerAccount.objects.filter(user=self.request.user)
+        if account.exists():
+            products = Product.objects.filter(seller=account)
+            return Transaction.objects.filter(product__in=products)
+        return []
+
+
 class SellerDashboard(LoginRequiredMixin, FormMixin, View):
     form_class = NewSellerForm
     success_url = "/sellers/"
