@@ -1,7 +1,7 @@
 from django.conf import settings
 from django.db import models
 
-# Create your models here.
+# Seller account
 
 class SellerAccount(models.Model):
     user = models.ForeignKey(settings.AUTH_USER_MODEL)

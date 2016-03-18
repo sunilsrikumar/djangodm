@@ -85,19 +85,6 @@ class ProductUpdateView(ProductManagerMixin, SubmitBtnMixin, MultiSlugMixin, Upd
                     new_tag.products.add(self.get_object())
         return valid_data
 
-    # def get_object(self, *args, **kwargs):
-    #     user = self.request.user
-    #     obj = super(ProductUpdateView, self).get_object(*args, **kwargs)
-    #     if obj.user == user or user in obj.managers.all():
-    #         return obj
-    #     else:
-    #         raise Http404
-
-    # def get_context_data(self, *args, **kwargs):
-    #     context = super(ProductUpdateView, self).get_context_data(*args, **kwargs)
-    #     context["submit_btn"] = "Update Product"
-    #     return context
-
 class ProductDetailView(MultiSlugMixin, DetailView):
     model = Product
 
@@ -105,8 +92,9 @@ class ProductDetailView(MultiSlugMixin, DetailView):
         context = super(ProductDetailView, self).get_context_data(*args, **kwargs)
         obj = self.get_object()
         tags = obj.tag_set.all()
-        for tag in tags:
-            new_view = TagView.objects.add_count(self.request.user.id, tag)
+        if self.request.user.is_authenticated():
+            for tag in tags:
+                new_view = TagView.objects.add_count(self.request.user.id, tag)
         return context
 
 class ProductDownloadView(MultiSlugMixin, DetailView):
