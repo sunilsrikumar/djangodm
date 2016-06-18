@@ -21,7 +21,7 @@ BASE_DIR = os.path.dirname(PROJECT_DIR)
 
 # SECURITY WARNING: don't run with debug turned on in production!
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['*']
 
 
 # Application definition
@@ -124,3 +124,14 @@ STATIC_ROOT = os.path.join(BASE_DIR, "static_cdn", "staticfiles")
 MEDIA_ROOT = os.path.join(BASE_DIR, "static_cdn", "media")
 
 PROTECTED_ROOT = os.path.join(BASE_DIR, "static_cdn", "protected")
+
+# Heroku deployment
+import dj_database_url
+DATABASES['default'] = dj_database_url.config()
+
+SECURE_PROXY_SSL_HEADER = ('HTTP_X_FORWARDED_PROTO', 'https')
+
+try:
+    from .dev_settings import *
+except ImportError:
+    pass
