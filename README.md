@@ -4,15 +4,13 @@ This project is an attempt to develop a Multi-vendor digital marketplace platfor
 
 ## Features
 * Products
-star:
-- Curated Products
-- My product
-- Products rating
-- Thumbnail
+* Curated Products
+* My product
+* Products rating
+* Image Thumbnail
 * Sellers
-star:
-- Seller dashboard
-- Seller side option for product management
+* Seller dashboard
+* Seller side option for product management
 * Admin dashboard
 * Basic analytics
 * Tags
